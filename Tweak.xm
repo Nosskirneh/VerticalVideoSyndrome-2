@@ -1,12 +1,5 @@
 #define kBundlePath @"/Library/Application Support/VerticalVideoSyndrome10.bundle"
-
 #define VIDEO 1
-
-#define PORTRAIT_UP 1
-#define PORTRAIT_DOWN 2
-#define LANDSCAPE_LEFT 3
-#define LANDSCAPE_RIGHT 4
-
 
 @interface VVSViewController : UIViewController
 @end
@@ -22,7 +15,10 @@
     UIImage *image = [UIImage imageWithContentsOfFile:imagePath];
 
     UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
-    [imageView setFrame:CGRectMake((screenWidth / 2) - (image.size.width / 2), 80, imageView.frame.size.width, imageView.frame.size.height)];
+    [imageView setFrame:CGRectMake((screenWidth / 2) - (image.size.width / 2),
+                                   80,
+                                   imageView.frame.size.width,
+                                   imageView.frame.size.height)];
     self.view = imageView;
 }
 
@@ -54,7 +50,8 @@ static VVSViewController *alertViewController;
 - (void)_rotateTopBarAndControlsToOrientation:(long long)orientation shouldAnimate:(BOOL)animate {
     %orig;
 
-    if (self._currentMode == VIDEO && (orientation == PORTRAIT_UP || orientation == PORTRAIT_DOWN)) {
+    if (self._currentMode == VIDEO && (orientation == UIInterfaceOrientationPortrait ||
+                                       orientation == UIDeviceOrientationPortraitUpsideDown)) {
         [self createVVSAlertViewControllerIfNeeded];
         [alertViewController.view setHidden:NO];
     } else if (alertViewController && !alertViewController.view.hidden) {
