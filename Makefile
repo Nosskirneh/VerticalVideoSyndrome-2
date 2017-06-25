@@ -1,7 +1,7 @@
 include $(THEOS)/makefiles/common.mk
 
-TWEAK_NAME = VerticalVideoSyndrome10
-VerticalVideoSyndrome10_FILES = Tweak.xm
+TWEAK_NAME = VerticalVideoSyndrome2
+VerticalVideoSyndrome2_FILES = Tweak.xm
 
 include $(THEOS_MAKE_PATH)/tweak.mk
 
