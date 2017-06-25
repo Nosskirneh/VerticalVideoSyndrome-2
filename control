@@ -3,7 +3,8 @@ Name: VerticalVideoSyndrome 2
 Depends: mobilesubstrate
 Version: 1.0
 Architecture: iphoneos-arm
-Description: An awesome MobileSubstrate tweak!
+Description: Say no to vertical video
+Depiction: https://andreashenriksson.se/repo/depictions/?p=se.nosskirneh.verticalvideosyndrome
 Maintainer: Andreas Henriksson
 Author: Andreas Henriksson
 Section: Tweaks
