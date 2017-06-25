@@ -100,12 +100,12 @@ static VVSViewController *alertViewController;
     }
 }
 
-// Is only executed on iPads; portrait is flipped
+// Is only executed on iPads
 - (void)didRotateFromInterfaceOrientation:(long long)orientation {
     %orig;
+    UIInterfaceOrientation interfaceOrientation = [[UIApplication sharedApplication] statusBarOrientation];
 
-    if (self._mode == VIDEO && (orientation != UIInterfaceOrientationPortrait &&
-                                orientation != UIDeviceOrientationPortraitUpsideDown)) {
+    if (self._mode == VIDEO && UIInterfaceOrientationIsPortrait(interfaceOrientation)) {
         [self.delegate createVVSAlertViewControllerIfNeeded];
         [alertViewController.view setHidden:NO];
     } else if (alertViewController && !alertViewController.view.hidden) {
