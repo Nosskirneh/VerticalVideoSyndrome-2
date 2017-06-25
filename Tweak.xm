@@ -26,6 +26,8 @@
 
 static VVSViewController *alertViewController;
 
+
+
 @interface CAMViewfinderViewController : UIViewController
 @property (nonatomic,readonly) long long _currentMode;
 - (void)createVVSAlertViewControllerIfNeeded;
@@ -47,6 +49,7 @@ static VVSViewController *alertViewController;
     }
 }
 
+// Is only executed on iPhones
 - (void)_rotateTopBarAndControlsToOrientation:(long long)orientation shouldAnimate:(BOOL)animate {
     %orig;
 
@@ -79,6 +82,7 @@ static VVSViewController *alertViewController;
 
 %end
 
+
 %hook CAMPreviewViewController
 
 - (void)didChangeToMode:(long long)mode device:(long long)device animated:(BOOL)animate {
@@ -89,10 +93,23 @@ static VVSViewController *alertViewController;
         if (alertViewController) {
             [alertViewController.view setHidden:YES];
         }
-    } else {
+    } else if (UIInterfaceOrientationIsPortrait([[UIApplication sharedApplication] statusBarOrientation])) {
         // Add sign
         [self.delegate createVVSAlertViewControllerIfNeeded];
         [alertViewController.view setHidden:NO];
+    }
+}
+
+// Is only executed on iPads; portrait is flipped
+- (void)didRotateFromInterfaceOrientation:(long long)orientation {
+    %orig;
+
+    if (self._mode == VIDEO && (orientation != UIInterfaceOrientationPortrait &&
+                                orientation != UIDeviceOrientationPortraitUpsideDown)) {
+        [self.delegate createVVSAlertViewControllerIfNeeded];
+        [alertViewController.view setHidden:NO];
+    } else if (alertViewController && !alertViewController.view.hidden) {
+        [alertViewController.view setHidden:YES];
     }
 }
 
